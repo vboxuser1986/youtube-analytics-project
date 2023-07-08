@@ -2,6 +2,7 @@ import os
 from googleapiclient.discovery import build
 import json
 
+
 class Channel:
     """Класс для ютуб-канала"""
     api_key: str = os.getenv('YT_API_KEY')
@@ -20,7 +21,34 @@ class Channel:
         self.__video_count = data['statistics']['videoCount']
         self.__viewCount = data['statistics']['viewCount']
 
-    #Геттеры
+    def __str__(self):
+        """Возвращает название  и ссылку по шаблону"""
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """Возвращает сумму подписчиков каналов"""
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Возвращает разность подписчиков каналов"""
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        """Возвращает результат сравнения подписчиков каналов"""
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        """Возвращает результат сравнения подписчиков каналов"""
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        """Возвращает результат сравнения подписчиков каналов"""
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        """Возвращает результат сравнения подписчиков каналов"""
+        return self.subscriber_count <= other.subscriber_count
+
     @property
     def channel_id(self):
         return self.__channel_id
